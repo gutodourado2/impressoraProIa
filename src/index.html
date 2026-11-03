@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ProIA Delivery Print</title>
+  <link rel="stylesheet" href="styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+  <!-- Barra de título customizada -->
+  <div class="titlebar" id="titlebar">
+    <div class="titlebar-left">
+      <img src="../assets/icon512x512-dark.png" class="titlebar-logo" alt="ProIA">
+      <span class="titlebar-text">ProIA Delivery Print</span>
+    </div>
+    <div class="titlebar-right">
+      <button class="titlebar-btn minimize" id="btn-minimize">─</button>
+      <button class="titlebar-btn close" id="btn-close">✕</button>
+    </div>
+  </div>
+
+  <div class="app-container">
+    <!-- Status Bar -->
+    <div class="status-bar" id="status-bar">
+      <div class="status-dot" id="status-dot"></div>
+      <span id="status-text">Aguardando configuração...</span>
+    </div>
+
+    <!-- Banner de Atualização Disponível -->
+    <div class="update-banner hidden" id="update-banner">
+      <div class="update-banner-left">
+        <span class="update-icon">🚀</span>
+        <div class="update-info">
+          <h4 id="update-banner-title">Nova versão disponível!</h4>
+          <p id="update-banner-sub">Clique para baixar a versão mais recente.</p>
+        </div>
+      </div>
+      <button class="btn-update" id="btn-update-action">Atualizar</button>
+    </div>
+
+    <!-- Tela de Setup -->
+    <div class="screen active" id="screen-setup">
+      <div class="header">
+        <div class="header-brand">
+          <img src="../assets/icon512x512-dark.png" class="header-logo" alt="ProIA">
+          <div>
+            <h1>Pro IA Delivery Printer</h1>
+            <p class="subtitle">Configure o agente de impressão da sua loja • v2.0.2</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-scroll">
+        <!-- Seção: Loja -->
+        <div class="section">
+          <div class="section-title">
+            <span class="section-icon">🏪</span>
+            <span>Dados da Loja</span>
+          </div>
+          
+          <div class="field">
+            <label for="nomeLoja">Nome da Loja</label>
+            <input type="text" id="nomeLoja" placeholder="Ex: Adega Brandão">
+          </div>
+
+          <div class="field">
+            <label for="empresaId">ID da Empresa</label>
+            <input type="number" id="empresaId" placeholder="Ex: 2">
+            <span class="field-hint">O ID único da empresa no sistema</span>
+          </div>
+        </div>
+
+
+
+        <!-- Seção: Impressão -->
+        <div class="section">
+          <div class="section-title">
+            <span class="section-icon">🖨️</span>
+            <span>Configurações de Impressão</span>
+          </div>
+
+          <div class="field-row">
+            <div class="field half">
+              <label for="fontSize">Tamanho da Fonte</label>
+              <div class="select-group">
+                <button class="select-btn" data-value="pequena" data-field="fontSize">A<span class="small">a</span></button>
+                <button class="select-btn active" data-value="media" data-field="fontSize">Aa</button>
+                <button class="select-btn" data-value="grande" data-field="fontSize">A<span class="big">A</span></button>
+              </div>
+            </div>
+
+            <div class="field half">
+              <label for="paperWidth">Largura do Papel</label>
+              <div class="select-group">
+                <button class="select-btn" data-value="58" data-field="paperWidth">58mm</button>
+                <button class="select-btn active" data-value="80" data-field="paperWidth">80mm</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="field-row">
+            <div class="field half">
+              <label for="extraLines">Linhas extras para corte</label>
+              <div class="range-container">
+                <input type="range" id="extraLines" min="0" max="10" value="3">
+                <span class="range-value" id="extraLines-value">3</span>
+              </div>
+            </div>
+
+            <div class="field half">
+              <label for="copies">Cópias por Pedido</label>
+              <div class="range-container">
+                <input type="range" id="copies" min="1" max="5" value="1">
+                <span class="range-value" id="copies-value">1</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Seção: Sistema -->
+        <div class="section">
+          <div class="section-title">
+            <span class="section-icon">⚙️</span>
+            <span>Sistema</span>
+          </div>
+
+          <div class="field toggle-field">
+            <label for="autoStart">Iniciar com o computador</label>
+            <label class="toggle">
+              <input type="checkbox" id="autoStart" checked>
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <!-- Ações -->
+      <div class="actions">
+        <button class="btn btn-secondary" id="btn-test">
+          🖨️ Imprimir Teste
+        </button>
+        <button class="btn btn-primary" id="btn-save">
+          ✅ Salvar e Iniciar
+        </button>
+      </div>
+    </div>
+
+    <!-- Tela Dashboard -->
+    <div class="screen" id="screen-dashboard">
+      <div class="header">
+        <div class="header-brand">
+          <img src="../assets/icon512x512-dark.png" class="header-logo" alt="ProIA">
+          <div>
+            <h1>ProIA Delivery Print</h1>
+            <p class="subtitle">Monitor de impressão em tempo real</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="dash-content">
+        <!-- Status Card -->
+        <div class="dash-card status-card">
+          <div class="dash-status-row">
+            <div class="dash-status-indicator connected" id="dash-status-indicator"></div>
+            <span class="dash-status-label" id="dash-status-text">Conectado — Aguardando pedidos</span>
+          </div>
+          <div class="dash-stats">
+            <div class="dash-stat">
+              <span class="dash-stat-number" id="print-counter">0</span>
+              <span class="dash-stat-label">Impressões</span>
+            </div>
+            <div class="dash-stat">
+              <span class="dash-stat-number" id="dash-copies-stat">1</span>
+              <span class="dash-stat-label">Comanda/Pedido</span>
+            </div>
+            <div class="dash-stat">
+              <span class="dash-stat-number" id="dash-empresa-stat" style="font-size: 20px; line-height: 32px;">#--</span>
+              <span class="dash-stat-label">Empresa ID</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Actions -->
+        <div class="dash-actions">
+          <button class="btn btn-secondary dash-btn" id="btn-dash-test">
+            🖨️ Imprimir Teste
+          </button>
+          <button class="btn btn-secondary dash-btn" id="btn-settings">
+            ⚙️ Configurações
+          </button>
+        </div>
+
+        <!-- Reimprimir por ID -->
+        <div class="dash-card reprint-card">
+          <div class="dash-card-header">
+            <span class="section-icon">🔄</span>
+            <span>Reimprimir Pedido (2ª Via)</span>
+          </div>
+          <div class="reprint-row">
+            <input type="number" id="reprint-pedido-id" placeholder="Ex: 109">
+            <button class="btn btn-primary btn-small" id="btn-reprint">
+              Reimprimir
+            </button>
+          </div>
+        </div>
+
+        <!-- Print Log -->
+        <div class="dash-card log-card">
+          <div class="dash-card-header">
+            <span class="section-icon">📋</span>
+            <span>Últimas Impressões</span>
+          </div>
+          <div class="print-log" id="print-log">
+            <div class="log-empty">Aguardando pedidos...</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Toast de notificação -->
+    <div class="toast" id="toast">
+      <span class="toast-icon" id="toast-icon">✅</span>
+      <span class="toast-text" id="toast-text">Salvo com sucesso!</span>
+    </div>
+  </div>
+
+  <script src="renderer.js"></script>
+</body>
+</html>

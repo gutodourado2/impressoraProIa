@@ -1,0 +1,57 @@
+{
+  "name": "proia-delivery-print",
+  "productName": "ProIA Delivery Print",
+  "version": "2.0.2",
+  "description": "ProIA Delivery Print - Impressão Automática e Precisa de Pedidos (Enterprise)",
+  "author": "ProIA Tecnologia",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "build:win": "electron-builder --win --x64",
+    "build:win-arm": "electron-builder --win --arm64",
+    "build:mac": "electron-builder --mac",
+    "build:all": "electron-builder --win --x64 --mac"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.39.0",
+    "auto-launch": "^5.0.6",
+    "electron-store": "^8.1.0",
+    "dotenv": "^16.3.1"
+  },
+  "devDependencies": {
+    "electron": "^28.0.0",
+    "electron-builder": "^24.9.1"
+  },
+  "build": {
+    "appId": "com.proia.delivery-print",
+    "productName": "ProIA Delivery Print",
+    "publish": null,
+    "directories": {
+      "output": "dist"
+    },
+    "files": [
+      "main.js",
+      "preload.js",
+      "printer-service.js",
+      ".env",
+      "src/**/*",
+      "assets/**/*",
+      "node_modules/**/*"
+    ],
+    "win": {
+      "target": "nsis",
+      "icon": "assets/icon.ico"
+    },
+    "mac": {
+      "target": "dmg",
+      "icon": "assets/icon.icns",
+      "category": "public.app-category.business"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "installerIcon": "assets/icon.ico",
+      "uninstallerIcon": "assets/icon.ico"
+    }
+  }
+}
